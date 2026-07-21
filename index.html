@@ -38,6 +38,34 @@
         .download-link:hover {
             text-decoration: underline;
         }
+        .desc-toggle {
+            margin-top: 10px;
+        }
+        .desc-toggle summary {
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: #888;
+            list-style: none;
+            display: inline-block;
+        }
+        .desc-toggle summary::-webkit-details-marker {
+            display: none;
+        }
+        .desc-toggle summary::before {
+            content: "+ notes";
+        }
+        .desc-toggle[open] summary::before {
+            content: "− notes";
+        }
+        .desc-toggle summary:hover {
+            color: #00ffff;
+        }
+        .desc-text {
+            font-size: 0.8rem;
+            color: #aaa;
+            margin-top: 6px;
+            line-height: 1.4;
+        }
     </style>
 </head>
 <body>
@@ -52,9 +80,9 @@
         // file: exact mp3 filename (must match the uploaded file)
         // ============================================
         const tracks = [
-            { title: "behold", file: "observation room.mp3" },
+            { title: "behold", file: "observation room.mp3", desc: "" },
 
-            // { title: "next track name", file: "next file name.mp3" },
+            // { title: "next track name", file: "next file name.mp3", desc: "optional notes about the track" },
         ];
         // ============================================
         // don't touch below this line
@@ -64,11 +92,19 @@
         tracks.forEach(track => {
             const card = document.createElement("div");
             card.className = "track-card";
+            const descHtml = track.desc && track.desc.trim() !== ""
+                ? `<details class="desc-toggle">
+                        <summary></summary>
+                        <div class="desc-text">${track.desc}</div>
+                   </details>`
+                : "";
+
             card.innerHTML = `
                 <h3>${track.title}</h3>
                 <audio controls src="${encodeURI(track.file)}"></audio>
                 <br>
                 <a class="download-link" href="${encodeURI(track.file)}" download>download</a>
+                ${descHtml}
             `;
             container.appendChild(card);
         });
