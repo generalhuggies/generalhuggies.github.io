@@ -41,18 +41,37 @@
     </style>
 </head>
 <body>
-
     <h1>tracks</h1>
 
-    <div class="track-card">
-        <h3>behold</h3>
-        
-        <!-- Replace YOUR_FILE_NAME.mp3 with your exact file name -->
-        <audio controls src="observation room.mp3"></audio>
-        
-        <br>
-        <a class="download-link" href="observation room.mp3" download>download</a>
-    </div>
+    <div id="track-list"></div>
 
+    <script>
+        // ============================================
+        // ADD NEW TRACKS HERE — just copy a line and edit it.
+        // title: whatever you want shown
+        // file: exact mp3 filename (must match the uploaded file)
+        // ============================================
+        const tracks = [
+            { title: "behold", file: "observation room.mp3" },
+
+            // { title: "next track name", file: "next file name.mp3" },
+        ];
+        // ============================================
+        // don't touch below this line
+        // ============================================
+
+        const container = document.getElementById("track-list");
+        tracks.forEach(track => {
+            const card = document.createElement("div");
+            card.className = "track-card";
+            card.innerHTML = `
+                <h3>${track.title}</h3>
+                <audio controls src="${encodeURI(track.file)}"></audio>
+                <br>
+                <a class="download-link" href="${encodeURI(track.file)}" download>download</a>
+            `;
+            container.appendChild(card);
+        });
+    </script>
 </body>
 </html>
