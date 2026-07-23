@@ -66,13 +66,55 @@
             margin-top: 6px;
             line-height: 1.4;
         }
+
+        /* author note card — same idea, slightly quieter */
+        .author-toggle {
+            margin-top: 15px;
+        }
+        .author-toggle summary {
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #888;
+            list-style: none;
+        }
+        .author-toggle summary::-webkit-details-marker {
+            display: none;
+        }
+        .author-toggle summary::before {
+            content: "+ about / author's note";
+        }
+        .author-toggle[open] summary::before {
+            content: "− about / author's note";
+        }
+        .author-toggle summary:hover {
+            color: #00ffff;
+        }
+        .author-text {
+            font-size: 0.85rem;
+            color: #aaa;
+            line-height: 1.5;
+            margin-top: 10px;
+            padding: 12px 16px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
     <h1>generalhuggies.io • kelpcake</h1>
 
-    <div id="track-list"></div>
+    <!-- ============================================ -->
+    <!-- author's note      -->
+    <!-- ============================================ -->
+    <details class="author-toggle">
+        <summary></summary>
+        <div class="author-text">
+            as a hobby artist, i constantly look for a way to express myself. i do this by drawing and writing, and sometimes with sound. most of these tracks were made while working on my sci-fi project, trying to put some of it to life when words and pictures fail me
+        </div>
+    </details>
+    <!-- ============================================ -->
 
+    <div id="track-list"></div>
     <script>
         // ============================================
         // title file and desc here
@@ -98,14 +140,12 @@
             { title: "elegy for the rings", file: "elegy for the rings.mp3", desc: "my goofy rendition of Andrew Prahlow's Elegy for the Rings from Outer Wilds: Echoes of The Eye" },
             { title: "heart-breaker", file: "heart-breaker.mp3", desc: "i combined two versions of Moon River and slapped a shit ton of reverb on it. inspired by a scene i was writing on" },
             { title: "the gauntlet - edit", file: "the_gauntlet.mp3", desc: "i stripped down The Gauntlet by Demon Hunters and slapped a shit ton of reverb on it. inspired by RDR2 reminding me of my own mortality in a most delightful way" },
-            
 
-            
+
         ];
         // ============================================
         // no touchie
         // ============================================
-
         const container = document.getElementById("track-list");
         tracks.forEach(track => {
             const card = document.createElement("div");
@@ -116,7 +156,6 @@
                         <div class="desc-text">${track.desc}</div>
                    </details>`
                 : "";
-
             card.innerHTML = `
                 <h3>${track.title}</h3>
                 <audio controls src="${encodeURI(track.file)}"></audio>
